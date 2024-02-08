@@ -1,11 +1,9 @@
-import { RouteObject } from "react-router-dom";
-import { createElement } from "react";
-import { HomePage } from "./home-page.ui";
+import { createElement, lazy } from 'react';
+import type { RouteObject } from 'react-router-dom';
+
+const HomePage = lazy(async () => import('./home-page.ui'));
 
 export const homePageRoute: RouteObject = {
-  path: "/",
-  element: createElement(HomePage),
-  loader: async (args) => {
-    return args
-  }
-}
+  path: '/',
+  element: createElement(HomePage)
+};

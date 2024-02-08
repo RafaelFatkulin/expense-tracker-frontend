@@ -11,12 +11,16 @@ module.exports = {
     'plugin:promise/recommended',
     'plugin:prettier/recommended'
   ],
-  plugins: ['simple-import-sort', 'prettier'],
-  ignorePatterns: ['dist', 'coverage'],
+  plugins: ['prettier'],
+  ignorePatterns: ['dist', 'coverage', ".eslintrc.cjs", "vite.config.ts"],
   parserOptions: {
+    parser: '@typescript-eslint/parser',
     ecmaFeatures: { jsx: true },
     ecmaVersion: 'latest',
-    sourceType: 'module'
+    sourceType: 'module',
+    project: './tsconfig.json',
+    tsconfigRootDir: __dirname,
+    requireConfigFile: false
   },
   rules: {
     'max-len': 'off',
@@ -48,28 +52,6 @@ module.exports = {
     'import/extensions': 'off',
     'import/prefer-default-export': 'off',
     'import/no-extraneous-dependencies': 'off',
-    'simple-import-sort/exports': 'error',
-    'simple-import-sort/imports': [
-      'error',
-      {
-        groups: [
-          // External packages:
-          ['^react', '^@?\\w'],
-          // Internal packages:
-          ['^@(siberiacancodepay-core/.*|$)'],
-          // Alias imports:
-          ['^@(([\\/.]?\\w)|assets|test-utils)'],
-          // Side effect imports:
-          ['^\\u0000'],
-          // Parent imports:
-          ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
-          // Other relative imports:
-          ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
-          // Style imports:
-          ['^.+\\.s?css$']
-        ]
-      }
-    ],
     'require-await': 'error'
   },
   overrides: [

@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -14,34 +18,62 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "sourceMap": true,
-
     // Linting
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "typeRoots": ["./node_modules/@types", "./types/", "./node_modules"],
+    "typeRoots": [
+      "./node"
+    ],
     "baseUrl": "./src",
     "paths": {
-      "~app": ["./app"],
-      "~app/*": ["./app/*"],
-
-      "~pages": ["./pages"],
-      "~pages/*": ["./pages/*"],
-
-      "~widgets": ["./widgets"],
-      "~widgets/*": ["./widgets/*"],
-
-      "~features": ["./features"],
-      "~features/*": ["./features/*"],
-
-      "~entities": ["./entities"],
-      "~entities/*": ["./entities/*"],
-
-      "~shared": ["./shared"],
-      "~shared/*": ["./shared/*"]
+      "~app": [
+        "./app"
+      ],
+      "~app/*": [
+        "./app/*"
+      ],
+      "~pages": [
+        "./pages"
+      ],
+      "~pages/*": [
+        "./pages/*"
+      ],
+      "~widgets": [
+        "./widgets"
+      ],
+      "~widgets/*": [
+        "./widgets/*"
+      ],
+      "~features": [
+        "./features"
+      ],
+      "~features/*": [
+        "./features/*"
+      ],
+      "~entities": [
+        "./entities"
+      ],
+      "~entities/*": [
+        "./entities/*"
+      ],
+      "~shared": [
+        "./shared"
+      ],
+      "~shared/*": [
+        "./shared/*"
+      ]
     }
   },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": [
+    "vite.config.ts",
+    ".eslintrc.cjs",
+    "src"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }
