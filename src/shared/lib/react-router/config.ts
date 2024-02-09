@@ -13,11 +13,11 @@ export const pathKeys = {
     return pathKeys.root.concat('settings/');
   },
   page404() {
-    return pathKeys.root.concat('404/');
+    return pathKeys.root.concat('not-found/');
   },
   wallet: {
     root() {
-      return pathKeys.root.concat('wallet/');
+      return pathKeys.root.concat('wallets/');
     },
     byId(id: number) {
       return pathKeys.wallet.root().concat(`${id}`, '/');

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { useMemo, createContext, useContext, useEffect, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { Button } from '~shared/ui/button';
 
@@ -49,13 +49,16 @@ export const ThemeProvider = ({
     root.classList.add(theme);
   }, [theme]);
 
-  const value = {
-    theme,
-    setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme);
-      setTheme(theme);
-    }
-  };
+  const value = useMemo(
+    () => ({
+      theme,
+      setTheme: (theme: Theme) => {
+        localStorage.setItem(storageKey, theme);
+        setTheme(theme);
+      }
+    }),
+    [theme, storageKey]
+  );
 
   return (
     <ThemeProviderContext.Provider {...props} value={value}>
@@ -81,7 +84,7 @@ export const ThemeToggler = () => {
       size='icon'
       onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
     >
-      {theme === 'light' ? <Moon /> : <Sun />}
+      {theme === 'light' ? <Moon className='size-6' /> : <Sun className='size-6' />}
     </Button>
   );
 };

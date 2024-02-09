@@ -16,5 +16,9 @@ const Providers = () => {
 };
 
 export const Provider = withSuspense(Providers, {
-  fallback: <Loader variant='xl' />
+  fallback: (
+    <div className='min-w-full min-h-screen flex items-center justify-center'>
+      <Loader className='text-primary' variant='xl' />
+    </div>
+  )
 });

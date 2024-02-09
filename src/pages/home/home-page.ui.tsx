@@ -1,5 +1,17 @@
+import { Hero } from '~widgets/hero';
+
 const HomePage = () => {
-  return <h1>Home page</h1>;
+  return (
+    <>
+      <Hero />
+      <Hero />
+      <Hero />
+      <Hero />
+      <Hero />
+      <Hero />
+      <Hero />
+    </>
+  );
 };
 
 export default HomePage;

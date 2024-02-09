@@ -4,7 +4,9 @@ import { homePageRoute } from '~pages/home';
 import { loginRoute } from '~pages/login';
 import { MainLayout } from '~pages/main-layout';
 import { page404Route } from '~pages/page-404';
+import { settingsPageRoute } from '~pages/settings';
 import { signupRoute } from '~pages/signup';
+import { walletsPageRoute } from '~pages/wallets';
 import { pathKeys } from '~shared/lib/react-router';
 
 const BubbleError = () => {
@@ -21,11 +23,11 @@ const router = createBrowserRouter([
     children: [
       {
         element: <MainLayout />,
-        children: [homePageRoute]
+        children: [walletsPageRoute, settingsPageRoute]
       },
       {
         element: <AuthLayout />,
-        children: [page404Route, loginRoute, signupRoute]
+        children: [page404Route, loginRoute, signupRoute, homePageRoute]
       },
       {
         // eslint-disable-next-line @typescript-eslint/require-await
