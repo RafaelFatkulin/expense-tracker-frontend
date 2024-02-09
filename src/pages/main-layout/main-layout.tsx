@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Menu } from 'lucide-react';
+import { Home, Menu } from 'lucide-react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { ThemeToggler } from '~features/theme';
 import { cn } from '~shared/lib/cn';
@@ -60,12 +60,14 @@ const SidebarLink = ({ path, children, icon }: SidebarLinkProps) => {
         cn(
           'inline-flex items-center whitespace-nowrap rounded-md text-sm font-medium' +
             ' transition-colors focus-visible:outline-none focus-visible:ring-1' +
-            ' focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 w-full justify-start',
-          isActive && 'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80'
+            ' focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50' +
+            ' hover:bg-accent hover:text-primary h-9 px-4 py-2 w-full justify-start',
+          isActive && 'bg-secondary text-primary shadow-sm hover:bg-secondary/80'
         )
       }
       to={path}
     >
+      {icon}
       {children}
     </NavLink>
   );
@@ -80,7 +82,9 @@ export const MainLayout = () => {
           <div className='grid grid-cols-1 md:grid-cols-[200px_minmax(360px,_1fr)]'>
             <aside>
               <nav className='hidden md:flex flex-col gap-1 py-6 pr-6 lg:py-8'>
-                <SidebarLink path={pathKeys.home()}>Главная</SidebarLink>
+                <SidebarLink icon={<Home className='mr-2 size-4' />} path={pathKeys.home()}>
+                  Главная
+                </SidebarLink>
                 <SidebarLink path={pathKeys.login()}>Войти</SidebarLink>
                 <SidebarLink path={pathKeys.signup()}>Регистрация</SidebarLink>
                 <SidebarLink path={pathKeys.wallet.root()}>Кошельки</SidebarLink>
