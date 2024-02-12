@@ -23,7 +23,7 @@ const router = createBrowserRouter([
     children: [
       {
         element: <MainLayout />,
-        children: [walletsPageRoute, settingsPageRoute]
+        children: [walletsPageRoute, settingsPageRoute, page404Route]
       },
       {
         element: <AuthLayout />,

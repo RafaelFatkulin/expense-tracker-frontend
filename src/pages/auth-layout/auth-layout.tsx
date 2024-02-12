@@ -1,11 +1,25 @@
+// import { useEffect } from 'react';
 import { Menu } from 'lucide-react';
-import { NavLink, Outlet } from 'react-router-dom';
+import {
+  NavLink,
+  Outlet
+  // useNavigate
+} from 'react-router-dom';
+// import { sessionQueries } from '~entities/session';
 import { ThemeToggler } from '~features/theme';
 import { pathKeys } from '~shared/lib/react-router';
 import { Button } from '~shared/ui/button';
 import { Container } from '~shared/ui/container';
+// import { Loader } from '~shared/ui/loader';
 import { Logo } from '~shared/ui/logo';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '~shared/ui/sheet';
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger
+} from '~shared/ui/sheet';
 import { Footer } from '~widgets/footer';
 
 const Header = () => {
@@ -40,10 +54,14 @@ const Header = () => {
 
                 <nav className='grid grid-cols-1 gap-2 pt-10'>
                   <Button variant='default' asChild>
-                    <NavLink to={pathKeys.login()}>Войти</NavLink>
+                    <SheetClose asChild>
+                      <NavLink to={pathKeys.login()}>Войти</NavLink>
+                    </SheetClose>
                   </Button>
                   <Button variant='outline' asChild>
-                    <NavLink to={pathKeys.signup()}>Регистрация</NavLink>
+                    <SheetClose asChild>
+                      <NavLink to={pathKeys.signup()}>Регистрация</NavLink>
+                    </SheetClose>
                   </Button>
                 </nav>
               </SheetContent>
@@ -56,6 +74,26 @@ const Header = () => {
 };
 
 export const AuthLayout = () => {
+  // const { data: user, isLoading, isPending } = sessionQueries.useCurrentUserQuery();
+  // const navigate = useNavigate();
+  //
+  // useEffect(() => {
+  //   if (user && !isLoading && !isPending) {
+  //     console.log('auth user', user);
+  //     navigate('/wallets');
+  //   } else {
+  //     navigate('/');
+  //   }
+  // }, [isLoading, isPending, navigate, user]);
+
+  // if (isLoading) {
+  //   return (
+  //     <div className='absolute inset-0 min-w-full min-h-screen flex items-center justify-center'>
+  //       <Loader className='text-primary' variant='xl' />
+  //     </div>
+  //   );
+  // }
+
   return (
     <>
       <Header />
