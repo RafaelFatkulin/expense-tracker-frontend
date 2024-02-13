@@ -22,12 +22,12 @@ export const SignupDtoSchema = z
   })
   .superRefine(({ confirmPassword, password }, ctx) => {
     if (confirmPassword !== password) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Passwords do not match',
+        path: ['confirmPassword']
+      });
     }
-    ctx.addIssue({
-      code: 'custom',
-      message: 'Passwords do not match',
-      path: ['confirmPassword']
-    });
   });
 
 export const LoginDtoSchema = z.object({

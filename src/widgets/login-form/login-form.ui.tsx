@@ -22,13 +22,7 @@ export const LoginForm = () => {
   });
 
   const onSubmit = (values: LoginDto) => {
-    console.log(values);
-    try {
-      mutate(values);
-    } catch (error) {
-      // Handle error appropriately, e.g., show an error message
-      console.error('Error during login:', error);
-    }
+    mutate(values);
   };
 
   return (

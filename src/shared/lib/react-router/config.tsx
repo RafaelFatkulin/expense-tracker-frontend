@@ -1,3 +1,6 @@
+import type { ReactNode } from 'react';
+import { Settings, WalletCards } from 'lucide-react';
+
 export const pathKeys = {
   root: '/',
   home() {
@@ -24,3 +27,22 @@ export const pathKeys = {
     }
   }
 };
+
+type NavLink = {
+  path: string;
+  icon: ReactNode;
+  text: string;
+};
+
+export const navLinks: NavLink[] = [
+  {
+    path: pathKeys.wallet.root(),
+    icon: <WalletCards className='mr-2 size-5' />,
+    text: 'Кошельки'
+  },
+  {
+    path: pathKeys.settings(),
+    icon: <Settings className='mr-2 size-5' />,
+    text: 'Настройки'
+  }
+];

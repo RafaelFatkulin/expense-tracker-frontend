@@ -4,6 +4,7 @@ import {
   // useQueryClient
 } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import type { ErrorMessage } from '~shared/api';
 import { queryClient } from '~shared/lib/react-query';
 import { pathKeys } from '~shared/lib/react-router';
 import { useToast } from '~shared/ui/use-toast';
@@ -62,6 +63,13 @@ export const useSignupMutation = () => {
         description: message
       });
       navigate(pathKeys.login());
+    },
+    onError: (error: ErrorMessage) => {
+      toast({
+        title: 'Ошибка',
+        description: error?.response?.data?.message,
+        variant: 'destructive'
+      });
     }
   });
 };
@@ -97,8 +105,6 @@ export const useUpdateUserMutation = ({ userId, username }: UpdateUserDto) => {
 
 export const useLogoutMutation = () => {
   const navigate = useNavigate();
-  // const queryClient = useQueryClient();
-  console.log('mutate');
 
   return useMutation({
     mutationKey: keys.logout(),

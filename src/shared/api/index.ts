@@ -1,9 +1,13 @@
-import type { AxiosError } from 'axios';
+import type { AxiosError, AxiosResponse } from 'axios';
 import axios from 'axios';
 
 export type SuccessMessage = {
   message: string;
 };
+
+export interface ErrorMessage extends AxiosError {
+  response: AxiosResponse;
+}
 
 export const api = axios.create({
   baseURL: 'http://localhost:8000'

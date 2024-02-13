@@ -1,1 +1,1 @@
-export { pathKeys } from './config';
+export { pathKeys, navLinks } from './config';

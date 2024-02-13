@@ -52,7 +52,12 @@ module.exports = {
     'import/extensions': 'off',
     'import/prefer-default-export': 'off',
     'import/no-extraneous-dependencies': 'off',
-    'require-await': 'error'
+    'require-await': 'error',
+    "@typescript-eslint/no-misused-promises": [2, {
+      "checksVoidReturn": {
+        "attributes": false
+      }
+    }]
   },
   overrides: [
     {
