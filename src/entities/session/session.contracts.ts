@@ -39,19 +39,3 @@ export const LoginDtoSchema = z.object({
 export const TokenResponseSchema = z.object({
   token: z.string()
 });
-
-export const CheckUsernameDtoSchema = z.object({
-  username: z.string().min(8).max(72)
-});
-
-export const CheckUsernameResponseSchema = z.object({
-  isUsernameAvailable: z.boolean()
-});
-
-export const CheckEmailDtoSchema = z.object({
-  email: z.string().email()
-});
-
-export const CheckEmailResponseSchema = z.object({
-  isEmailAvailable: z.boolean()
-});

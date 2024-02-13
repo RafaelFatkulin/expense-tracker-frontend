@@ -1,12 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import type { SignupDto } from '~entities/session';
 import { SignupDtoSchema, useSignupMutation } from '~entities/session';
+import { pathKeys } from '~shared/lib/react-router';
 import { Button } from '~shared/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '~shared/ui/form';
 import { Input } from '~shared/ui/input';
 import { Loader } from '~shared/ui/loader';
 import { PasswordInput } from '~shared/ui/password-input';
+import { Text } from '~shared/ui/text';
 
 export const SignupForm = () => {
   const { mutate, isPending } = useSignupMutation();
@@ -83,6 +86,16 @@ export const SignupForm = () => {
           {isPending && <Loader variant='sm' className='mr-2' />}
           Регистрация
         </Button>
+
+        <Text variant='muted'>
+          Уже есть аккаунт?
+          <Link
+            className='underline ml-1 transition-colors hover:text-primary'
+            to={pathKeys.login()}
+          >
+            Войти
+          </Link>
+        </Text>
       </form>
     </Form>
   );

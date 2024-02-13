@@ -1,5 +1,7 @@
+import { PageHeader } from '~shared/ui/page-header';
+
 const SettingsPage = () => {
-  return <h1>Settings page</h1>;
+  return <PageHeader title='Настройки' description='Редактируйте данные аккаунта' />;
 };
 
 export default SettingsPage;

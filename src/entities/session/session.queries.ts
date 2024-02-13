@@ -8,14 +8,7 @@ import type { ErrorMessage } from '~shared/api';
 import { queryClient } from '~shared/lib/react-query';
 import { pathKeys } from '~shared/lib/react-router';
 import { useToast } from '~shared/ui/use-toast';
-import {
-  checkEmail,
-  checkUsername,
-  getCurrentUser,
-  login,
-  signup,
-  updateUser
-} from './session.api';
+import { getCurrentUser, login, signup, updateUser } from './session.api';
 import { sessionStore } from './session.model';
 import type { UpdateUserDto } from './session.types';
 
@@ -25,8 +18,6 @@ const keys = {
   login: () => [...keys.root, 'login'] as const,
   signup: () => [...keys.root, 'signup'] as const,
   updateUser: () => [...keys.root, 'updateUser'] as const,
-  checkUsername: () => [...keys.root, 'checkUsername'] as const,
-  checkEmail: () => [...keys.root, 'checkEmail'] as const,
   logout: () => [...keys.root, 'logout'] as const
 };
 
@@ -71,20 +62,6 @@ export const useSignupMutation = () => {
         variant: 'destructive'
       });
     }
-  });
-};
-
-export const useCheckUsernameMutation = () => {
-  return useMutation({
-    mutationKey: keys.checkUsername(),
-    mutationFn: checkUsername
-  });
-};
-
-export const useCheckEmailMutation = () => {
-  return useMutation({
-    mutationKey: keys.checkEmail(),
-    mutationFn: checkEmail
   });
 };
 
