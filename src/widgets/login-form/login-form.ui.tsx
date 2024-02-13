@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import type { sessionTypes } from '~entities/session';
-import { sessionContracts, sessionQueries } from '~entities/session';
+import type { LoginDto } from '~entities/session';
+import { LoginDtoSchema, useLoginMutation } from '~entities/session';
 import { Button } from '~shared/ui/button';
 import { Checkbox } from '~shared/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '~shared/ui/form';
@@ -10,10 +10,10 @@ import { Loader } from '~shared/ui/loader';
 import { PasswordInput } from '~shared/ui/password-input';
 
 export const LoginForm = () => {
-  const { mutate, isPending } = sessionQueries.useLoginMutation();
+  const { mutate, isPending } = useLoginMutation();
 
   const form = useForm({
-    resolver: zodResolver(sessionContracts.LoginDtoSchema),
+    resolver: zodResolver(LoginDtoSchema),
     defaultValues: {
       email: '',
       password: '',
@@ -21,7 +21,7 @@ export const LoginForm = () => {
     }
   });
 
-  const onSubmit = (values: sessionTypes.LoginDto) => {
+  const onSubmit = (values: LoginDto) => {
     console.log(values);
     try {
       mutate(values);

@@ -1,10 +1,10 @@
 import { LogOut } from 'lucide-react';
-import { sessionQueries } from '~entities/session';
+import { useLogoutMutation } from '~entities/session';
 import { Button } from '~shared/ui/button';
 import { Loader } from '~shared/ui/loader';
 
 export const LogoutButton = () => {
-  const { mutate, isPending } = sessionQueries.useLogoutMutation();
+  const { mutate, isPending } = useLogoutMutation();
 
   const onClick = () => {
     mutate();

@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
 import { Menu } from 'lucide-react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { sessionQueries } from '~entities/session';
-import type { User } from '~entities/session/session.types';
+import { Navigate, Outlet } from 'react-router-dom';
+import { useCurrentUserQuery } from '~entities/session';
+import type { User } from '~entities/session';
 import { ThemeToggler } from '~features/theme';
 import { pathKeys } from '~shared/lib/react-router';
 import { Button } from '~shared/ui/button';
@@ -57,14 +56,11 @@ const Header = ({ user }: HeaderProps) => {
 };
 
 export const MainLayout = () => {
-  const { data: user, isLoading } = sessionQueries.useCurrentUserQuery();
-  const navigate = useNavigate();
+  const { data: user, isLoading } = useCurrentUserQuery();
 
-  useEffect(() => {
-    if (!user && !isLoading) {
-      navigate('/', { replace: true });
-    }
-  }, [isLoading, user]);
+  if (!user && !isLoading) {
+    return <Navigate to='/' />;
+  }
 
   if (isLoading) {
     return (

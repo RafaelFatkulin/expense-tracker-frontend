@@ -1,16 +1,18 @@
 // import { useEffect } from 'react';
 import { Menu } from 'lucide-react';
 import {
+  Navigate,
   NavLink,
   Outlet
   // useNavigate
 } from 'react-router-dom';
-// import { sessionQueries } from '~entities/session';
+import { useCurrentUserQuery } from '~entities/session';
 import { ThemeToggler } from '~features/theme';
 import { pathKeys } from '~shared/lib/react-router';
 import { Button } from '~shared/ui/button';
 import { Container } from '~shared/ui/container';
 // import { Loader } from '~shared/ui/loader';
+import { Loader } from '~shared/ui/loader';
 import { Logo } from '~shared/ui/logo';
 import {
   Sheet,
@@ -28,7 +30,7 @@ const Header = () => {
       <Container>
         <div className='flex flex-row items-center justify-between py-3'>
           <Logo path={pathKeys.home()} />
-
+          <NavLink to='/wallets'>wallets</NavLink>
           <div className='flex items-center gap-2'>
             <ThemeToggler />
 
@@ -74,25 +76,21 @@ const Header = () => {
 };
 
 export const AuthLayout = () => {
-  // const { data: user, isLoading, isPending } = sessionQueries.useCurrentUserQuery();
-  // const navigate = useNavigate();
-  //
-  // useEffect(() => {
-  //   if (user && !isLoading && !isPending) {
-  //     console.log('auth user', user);
-  //     navigate('/wallets');
-  //   } else {
-  //     navigate('/');
-  //   }
-  // }, [isLoading, isPending, navigate, user]);
+  const { data: user, isLoading, isPending } = useCurrentUserQuery();
 
-  // if (isLoading) {
-  //   return (
-  //     <div className='absolute inset-0 min-w-full min-h-screen flex items-center justify-center'>
-  //       <Loader className='text-primary' variant='xl' />
-  //     </div>
-  //   );
-  // }
+  if (user && !isLoading && !isPending) {
+    console.log('auth user', user);
+    // navigate('/wallets');
+    return <Navigate to='/wallets' />;
+  }
+
+  if (isLoading) {
+    return (
+      <div className='absolute inset-0 min-w-full min-h-screen flex items-center justify-center'>
+        <Loader className='text-primary' variant='xl' />
+      </div>
+    );
+  }
 
   return (
     <>

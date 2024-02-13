@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
-import { sessionQueries } from '~entities/session';
+import { useCurrentUserQuery } from '~entities/session';
 import { pathKeys } from '~shared/lib/react-router';
 
 const Page404 = () => {
-  const { data: user } = sessionQueries.useCurrentUserQuery();
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  const { data: user } = useCurrentUserQuery();
   return (
     <div>
       <h1>Page not found</h1>
