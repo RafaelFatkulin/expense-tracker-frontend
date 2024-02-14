@@ -22,8 +22,8 @@ export const createWallet = async (createWalletDto: CreateWalletDto) => {
   return response.data;
 };
 
-export const updateWallet = async (id: number, updateWalletDto: UpdateWalletDto) => {
-  const response = await api.patch<SuccessMessage>(`/wallets/${id}`, updateWalletDto);
+export const updateWallet = async (params: { id: number; updateWalletDto: UpdateWalletDto }) => {
+  const response = await api.patch<SuccessMessage>(`/wallets/${params.id}`, params.updateWalletDto);
   return response.data;
 };
 

@@ -1,1 +1,1 @@
-export { CreateWalletForm } from './create-wallet-from.ui';
+export { CreateWalletForm } from './create-wallet-form.ui';

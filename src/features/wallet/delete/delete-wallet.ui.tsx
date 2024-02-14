@@ -26,12 +26,7 @@ export const DeleteWalletButton = forwardRef<HTMLButtonElement, Props>(({ wallet
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          ref={ref}
-          className='w-full px-2 py-1.5 justify-start cursor-pointer'
-          variant='ghost'
-        >
-          <Trash2 className='size-4 mr-2' />
+        <Button ref={ref} variant='link-destructive'>
           Удалить
         </Button>
       </DialogTrigger>
@@ -48,6 +43,7 @@ export const DeleteWalletButton = forwardRef<HTMLButtonElement, Props>(({ wallet
             className='w-full sm:w-auto sm:ml-0 mr-auto'
             variant='destructive'
           >
+            <Trash2 className='size-4 mr-2' />
             Удалить
           </Button>
         </DialogFooter>
