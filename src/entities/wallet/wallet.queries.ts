@@ -1,14 +1,8 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import {
-  createWallet,
-  deleteWallet,
-  getWallet,
-  getWallets,
-  updateWallet
-} from '~entities/wallet/wallet.api';
-import type { UpdateWalletDto } from '~entities/wallet/wallet.types';
 import { queryClient } from '~shared/lib/react-query';
 import { useToast } from '~shared/ui/use-toast';
+import { createWallet, deleteWallet, getWallet, getWallets, updateWallet } from './wallet.api';
+import type { UpdateWalletDto } from './wallet.types';
 
 const keys = {
   root: ['wallet'],
@@ -70,7 +64,8 @@ export const useDeleteWalletMutation = (id: number) => {
   return useMutation({
     mutationKey: keys.delete(id),
     mutationFn: () => deleteWallet(id),
-    onSuccess: ({ message }) => {
+    onSuccess: async ({ message }) => {
+      await queryClient.refetchQueries({ queryKey: keys.all() });
       toast({
         title: 'Успешно',
         description: message

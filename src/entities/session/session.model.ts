@@ -14,6 +14,7 @@ type State = {
 type Actions = {
   updateToken: (token: Token | null) => void;
   updateUser: (user: User | null) => void;
+  clear: () => void;
 };
 
 type SessionState = State & Actions;
@@ -27,7 +28,11 @@ const createSessionSlice: StateCreator<
   token: null,
   user: null,
   updateToken: (token: Token | null) => set({ token: token || null }, false, 'updateToken'),
-  updateUser: (user: User | null) => set({ user: user || null }, false, 'updateUser')
+  updateUser: (user: User | null) => set({ user: user || null }, false, 'updateUser'),
+  clear: () => {
+    console.log('here');
+    set({ token: null, user: null }, false, 'clear');
+  }
 });
 
 const persistOptions: PersistOptions<SessionState> = { name: 'session' };

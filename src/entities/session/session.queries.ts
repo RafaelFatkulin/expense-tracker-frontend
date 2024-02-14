@@ -24,7 +24,8 @@ const keys = {
 export const useCurrentUserQuery = () => {
   return useQuery({
     queryKey: keys.currentUser(),
-    queryFn: getCurrentUser
+    queryFn: getCurrentUser,
+    enabled: !!localStorage.getItem('token')
   });
 };
 

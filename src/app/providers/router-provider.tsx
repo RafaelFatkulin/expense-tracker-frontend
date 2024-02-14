@@ -6,6 +6,7 @@ import { MainLayout } from '~pages/main-layout';
 import { page404Route } from '~pages/page-404';
 import { settingsPageRoute } from '~pages/settings';
 import { signupRoute } from '~pages/signup';
+import { walletPageRoute } from '~pages/wallet';
 import { walletsPageRoute } from '~pages/wallets';
 import { pathKeys } from '~shared/lib/react-router';
 
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
     children: [
       {
         element: <MainLayout />,
-        children: [walletsPageRoute, settingsPageRoute, page404Route]
+        children: [walletsPageRoute, walletPageRoute, settingsPageRoute, page404Route]
       },
       {
         element: <AuthLayout />,

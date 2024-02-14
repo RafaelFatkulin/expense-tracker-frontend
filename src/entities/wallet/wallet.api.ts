@@ -1,6 +1,11 @@
-import type { CreateWalletDto, UpdateWalletDto, Wallet } from '~entities/wallet/wallet.types';
 import type { SuccessMessage } from '~shared/api';
 import { api } from '~shared/api';
+import type {
+  CreateWalletDto,
+  UpdateWalletDto,
+  Wallet,
+  WalletWithTransactions
+} from './wallet.types';
 
 export const getWallets = async () => {
   const response = await api.get<Wallet[]>('/wallets');
@@ -8,7 +13,7 @@ export const getWallets = async () => {
 };
 
 export const getWallet = async (id: number) => {
-  const response = await api.get<Wallet>(`/wallets/${id}`);
+  const response = await api.get<WalletWithTransactions>(`/wallets/${id}`);
   return response.data;
 };
 

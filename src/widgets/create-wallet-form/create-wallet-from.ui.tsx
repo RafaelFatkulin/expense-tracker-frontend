@@ -10,7 +10,6 @@ import { Input } from '~shared/ui/input';
 import { Loader } from '~shared/ui/loader';
 
 export const CreateWalletForm = ({ closeDialog }: { closeDialog: () => void }) => {
-  console.log('mounted');
   const { mutate, isPending } = useCreateWalletMutation();
 
   const { data: user } = useCurrentUserQuery();
@@ -27,7 +26,7 @@ export const CreateWalletForm = ({ closeDialog }: { closeDialog: () => void }) =
     mutate(values, {
       onSuccess: () => {
         closeDialog();
-        // form.reset();
+        form.reset();
       }
     });
 

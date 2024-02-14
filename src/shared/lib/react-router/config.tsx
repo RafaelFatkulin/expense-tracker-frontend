@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Settings, WalletCards } from 'lucide-react';
+import { Settings, Tags, WalletCards } from 'lucide-react';
 
 export const pathKeys = {
   root: '/',
@@ -14,6 +14,9 @@ export const pathKeys = {
   },
   settings() {
     return pathKeys.root.concat('settings/');
+  },
+  tags() {
+    return pathKeys.root.concat('tags/');
   },
   page404() {
     return pathKeys.root.concat('not-found/');
@@ -39,6 +42,11 @@ export const navLinks: NavLink[] = [
     path: pathKeys.wallet.root(),
     icon: <WalletCards className='mr-2 size-5' />,
     text: 'Кошельки'
+  },
+  {
+    path: pathKeys.tags(),
+    icon: <Tags className='mr-2 size-5' />,
+    text: 'Тэги'
   },
   {
     path: pathKeys.settings(),

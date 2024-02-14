@@ -1,5 +1,7 @@
 import type { AxiosError, AxiosResponse } from 'axios';
 import axios from 'axios';
+import { queryClient } from '~shared/lib/react-query';
+import { pathKeys } from '~shared/lib/react-router';
 
 export type SuccessMessage = {
   message: string;
@@ -27,6 +29,8 @@ api.interceptors.response.use(
   (error: AxiosError) => {
     if (error.response?.status === 401) {
       localStorage.clear();
+      queryClient.clear();
+      window.location.replace(pathKeys.root);
     }
     return Promise.reject(error);
   }
