@@ -16,6 +16,7 @@ export const pathKeys = {
     return pathKeys.root.concat('settings/');
   },
   tags() {
+    // Maybe in future I will add tag page for viewing all transactions with this tag
     return pathKeys.root.concat('tags/');
   },
   page404() {
