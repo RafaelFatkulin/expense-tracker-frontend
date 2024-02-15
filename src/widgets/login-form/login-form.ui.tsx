@@ -24,13 +24,13 @@ export const LoginForm = () => {
     }
   });
 
-  const onSubmit = (values: LoginDto) => {
+  const onSubmit = form.handleSubmit((values: LoginDto) => {
     mutate(values);
-  };
+  });
 
   return (
     <Form {...form}>
-      <form className='grid gap-3' onSubmit={form.handleSubmit(onSubmit)}>
+      <form className='grid gap-3' onSubmit={onSubmit}>
         <FormField
           control={form.control}
           name='email'

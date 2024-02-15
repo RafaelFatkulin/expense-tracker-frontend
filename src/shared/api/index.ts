@@ -8,7 +8,7 @@ export type SuccessMessage = {
 };
 
 export interface ErrorMessage extends AxiosError {
-  response: AxiosResponse;
+  response: AxiosResponse<{ message: string }>;
 }
 
 export const api = axios.create({

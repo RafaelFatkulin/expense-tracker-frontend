@@ -3,12 +3,12 @@ import {
   useQuery
   // useQueryClient
 } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import type { ErrorMessage } from '~shared/api';
 import { queryClient } from '~shared/lib/react-query';
 import { pathKeys } from '~shared/lib/react-router';
 import { useToast } from '~shared/ui/use-toast';
-import { getCurrentUser, login, signup, updateUser } from './session.api';
+import { getCurrentUser, login, signup, updateUser, verifyEmail } from './session.api';
 import { sessionStore } from './session.model';
 import type { UpdateUserDto } from './session.types';
 
@@ -18,7 +18,8 @@ const keys = {
   login: () => [...keys.root, 'login'] as const,
   signup: () => [...keys.root, 'signup'] as const,
   updateUser: () => [...keys.root, 'updateUser'] as const,
-  logout: () => [...keys.root, 'logout'] as const
+  logout: () => [...keys.root, 'logout'] as const,
+  verify: () => [...keys.root, 'verify'] as const
 };
 
 export const useCurrentUserQuery = () => {
@@ -26,6 +27,16 @@ export const useCurrentUserQuery = () => {
     queryKey: keys.currentUser(),
     queryFn: getCurrentUser,
     enabled: !!localStorage.getItem('token')
+  });
+};
+
+export const useVefiryEmailQuery = () => {
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get('token')!;
+
+  return useQuery({
+    queryKey: keys.verify(),
+    queryFn: () => verifyEmail({ token })
   });
 };
 
@@ -43,7 +54,7 @@ export const useLoginMutation = () => {
     onError: (error: ErrorMessage) => {
       toast({
         title: 'Ошибка',
-        description: error.response.data.message as string,
+        description: error.response.data?.message,
         variant: 'destructive'
       });
     }
@@ -67,7 +78,7 @@ export const useSignupMutation = () => {
     onError: (error: ErrorMessage) => {
       toast({
         title: 'Ошибка',
-        description: error?.response?.data?.message as string,
+        description: error?.response?.data?.message,
         variant: 'destructive'
       });
     }

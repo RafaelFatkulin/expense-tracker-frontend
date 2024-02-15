@@ -8,6 +8,12 @@ export const getCurrentUser = async () => {
   return response.data;
 };
 
+export const verifyEmail = async ({ token }: { token: string }) => {
+  const response = await api.get<SuccessMessage>(`/auth/verify?token=${token}`);
+
+  return response.data;
+};
+
 export const login = async ({ email, password, remember }: LoginDto) => {
   const response = await api.post<Token>('/auth/login', {
     email,

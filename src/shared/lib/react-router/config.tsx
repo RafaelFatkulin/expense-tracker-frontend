@@ -21,6 +21,9 @@ export const pathKeys = {
   page404() {
     return pathKeys.root.concat('not-found/');
   },
+  verifyMail() {
+    return pathKeys.root.concat('email-verify/');
+  },
   wallet: {
     root() {
       return pathKeys.root.concat('wallets/');
