@@ -31,6 +31,7 @@ export const useCurrentUserQuery = () => {
 
 export const useLoginMutation = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   return useMutation({
     mutationKey: keys.login(),
@@ -38,6 +39,13 @@ export const useLoginMutation = () => {
     onSuccess: ({ token }) => {
       localStorage.setItem('token', token);
       navigate(pathKeys.wallet.root());
+    },
+    onError: (error: ErrorMessage) => {
+      toast({
+        title: 'Ошибка',
+        description: error.response.data.message as string,
+        variant: 'destructive'
+      });
     }
   });
 };
@@ -59,7 +67,7 @@ export const useSignupMutation = () => {
     onError: (error: ErrorMessage) => {
       toast({
         title: 'Ошибка',
-        description: error?.response?.data?.message,
+        description: error?.response?.data?.message as string,
         variant: 'destructive'
       });
     }
