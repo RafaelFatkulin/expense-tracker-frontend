@@ -13,13 +13,14 @@ import {
   DialogTitle,
   DialogTrigger
 } from '~shared/ui/dialog';
+import { Loader } from '~shared/ui/loader';
 
 type Props = {
   wallet: Wallet;
 } & HTMLAttributes<HTMLButtonElement>;
 
 export const DeleteWalletButton = forwardRef<HTMLButtonElement, Props>(({ wallet }: Props, ref) => {
-  const { mutate } = useDeleteWalletMutation(wallet.id);
+  const { mutate, isPending } = useDeleteWalletMutation(wallet.id);
 
   const handleClick = () => mutate();
 
@@ -42,8 +43,13 @@ export const DeleteWalletButton = forwardRef<HTMLButtonElement, Props>(({ wallet
             onClick={handleClick}
             className='w-full sm:w-auto sm:ml-0 mr-auto'
             variant='destructive'
+            disabled={isPending}
           >
-            <Trash2 className='size-4 mr-2' />
+            {isPending ? (
+              <Loader variant='sm' className='mr-2' />
+            ) : (
+              <Trash2 className='size-4 mr-2' />
+            )}
             Удалить
           </Button>
         </DialogFooter>

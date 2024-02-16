@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
+import type { ErrorMessage } from '~shared/api';
 import { queryClient } from '~shared/lib/react-query';
 import { useToast } from '~shared/ui/use-toast';
 import { createTag, deleteTag, getAllTags, getOneTag, updateTag } from './tag.api';
@@ -39,10 +40,10 @@ export const useCreateTagMutation = () => {
         description: message
       });
     },
-    onError: ({ message }) => {
+    onError: (error: ErrorMessage) => {
       toast({
         title: 'Ошибка',
-        description: message,
+        description: error.response.data.message,
         variant: 'destructive'
       });
     }
@@ -62,10 +63,10 @@ export const useUpdateTagMutation = (id: number) => {
         description: message
       });
     },
-    onError: ({ message }) => {
+    onError: (error: ErrorMessage) => {
       toast({
         title: 'Ошибка',
-        description: message,
+        description: error.response.data.message,
         variant: 'destructive'
       });
     }
@@ -84,10 +85,10 @@ export const useDeleteTagMutation = (id: number) => {
         description: message
       });
     },
-    onError: ({ message }) => {
+    onError: (error: ErrorMessage) => {
       toast({
         title: 'Ошибка',
-        description: message,
+        description: error.response.data.message,
         variant: 'destructive'
       });
     }

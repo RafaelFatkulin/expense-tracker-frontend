@@ -1,3 +1,5 @@
+import type { KeyboardEvent } from 'react';
+import { memo } from 'react';
 import { Palette } from 'lucide-react';
 import type { UseFormSetValue } from 'react-hook-form';
 import { colors } from '~shared/lib/colors';
@@ -10,8 +12,14 @@ type Props = {
   setValue: UseFormSetValue<any>;
 };
 
-export const ColorPicker = ({ value, setValue }: Props) => {
-  console.log('render');
+export const ColorPicker = memo(({ value, setValue }: Props) => {
+  const onClick = (color: string) => setValue('color', color);
+  const onKeyDown = (event: KeyboardEvent<HTMLElement>, color: string) => {
+    if ((!event.defaultPrevented && event.key === ' ') || event.key === 'Enter') {
+      setValue('color', color);
+    }
+  };
+
   return (
     <Popover modal>
       <PopoverTrigger asChild>
@@ -36,25 +44,20 @@ export const ColorPicker = ({ value, setValue }: Props) => {
         <ScrollArea className='w-full h-[200px] rounded scroll-pr-2.5'>
           <div className=' flex flex-row flex-wrap gap-1'>
             {colors.map((color) => (
-              <div
+              <i
                 tabIndex={0}
                 role='button'
                 key={color}
+                aria-label={color}
                 className='w-5 h-5 rounded cursor-pointer'
                 style={{ backgroundColor: color }}
-                onClick={() => setValue('color', color)}
-                onKeyDown={(event) => {
-                  if ((!event.defaultPrevented && event.key === ' ') || event.key === 'Enter') {
-                    setValue('color', color);
-                  }
-                }}
-              >
-                <span className='sr-only'>{color}</span>
-              </div>
+                onClick={() => onClick(color)}
+                onKeyDown={(e) => onKeyDown(e, color)}
+              />
             ))}
           </div>
         </ScrollArea>
       </PopoverContent>
     </Popover>
   );
-};
+});

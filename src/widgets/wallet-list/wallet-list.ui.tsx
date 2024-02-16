@@ -13,7 +13,7 @@ export const WalletList = () => {
   return (
     wallets &&
     (wallets.length > 0 ? (
-      <ul className='grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8'>
+      <div className='grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8'>
         {wallets.map((wallet) => (
           <WalletCard
             key={wallet.id}
@@ -22,7 +22,7 @@ export const WalletList = () => {
             deleteButton={<DeleteWalletButton wallet={wallet} />}
           />
         ))}
-      </ul>
+      </div>
     ) : (
       <Text>У вас ещё нет кошельков? Попробуйте создать один.</Text>
     ))
