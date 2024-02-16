@@ -3,11 +3,11 @@ import { PlusCircle } from 'lucide-react';
 import { Button } from '~shared/ui/button';
 import { Dialog, DialogTrigger } from '~shared/ui/dialog';
 
-export const CreateWalletButton = ({ onClick }: { onClick: () => void }) => {
+export const CreateTransactionButton = ({ onClick }: { onClick: () => void }) => {
   return (
     <DialogTrigger asChild>
       <Button onClick={onClick}>
-        <PlusCircle className='mr-2 size-5' /> Создать
+        <PlusCircle className='mr-2 size-5' /> Добавить транзакцию
       </Button>
     </DialogTrigger>
   );
@@ -19,7 +19,7 @@ type CreateWalletDialogProps = {
   setOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-export const CreateWalletDialog = ({ children, open, setOpen }: CreateWalletDialogProps) => {
+export const CreateTransactionDialog = ({ children, open, setOpen }: CreateWalletDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       {children}

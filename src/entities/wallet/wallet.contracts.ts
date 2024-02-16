@@ -13,8 +13,7 @@ export const WalletWithTransactionsSchema = z.object({
   title: z.string(),
   balance: z.number().nullish(),
   userId: z.number(),
-  incomes: z.array(TransactionSchema),
-  expenses: z.array(TransactionSchema)
+  transactions: z.array(TransactionSchema)
 });
 
 export const CreateWalletDtoSchema = z.object({
