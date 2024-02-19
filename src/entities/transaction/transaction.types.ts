@@ -2,14 +2,10 @@ import type { z } from 'zod';
 import type {
   CreateTransactionDtoSchema,
   TransactionSchema,
-  TransactionTypeSchema,
   UpdateTransactionDtoSchema
 } from './transaction.contracts';
 
 export type Transaction = z.infer<typeof TransactionSchema>;
 export type CreateTransactionDto = z.infer<typeof CreateTransactionDtoSchema>;
 export type UpdateTransactionDto = z.infer<typeof UpdateTransactionDtoSchema>;
-export enum TransactionType {
-  INCOME = 'INCOME',
-  EXPENSE = 'EXPENSE'
-}
+export type TransactionType = 'INCOME' | 'EXPENSE';

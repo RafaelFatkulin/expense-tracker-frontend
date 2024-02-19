@@ -1,14 +1,11 @@
+import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
 import { ChevronsDown, ChevronsUp } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useGetAllTagsQuery } from '~entities/tag';
-import type { CreateTransactionDto } from '~entities/transaction';
-import {
-  CreateTransactionDtoSchema,
-  TransactionType,
-  useCreateTransactionMutation
-} from '~entities/transaction';
+import type { CreateTransactionDto, TransactionType } from '~entities/transaction';
+import { CreateTransactionDtoSchema, useCreateTransactionMutation } from '~entities/transaction';
 import { cn } from '~shared/lib/cn';
 import { Button } from '~shared/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '~shared/ui/command';
@@ -19,8 +16,8 @@ import { Loader } from '~shared/ui/loader';
 import { Popover, PopoverContent, PopoverTrigger } from '~shared/ui/popover';
 
 const types = [
-  { label: 'Доход', value: TransactionType.INCOME },
-  { label: 'Расход', value: TransactionType.EXPENSE }
+  { label: 'Доход', value: 'INCOME' },
+  { label: 'Расход', value: 'EXPENSE' }
 ] as const;
 
 export const CreateTransactionForm = ({
@@ -31,16 +28,19 @@ export const CreateTransactionForm = ({
   closeDialog: () => void;
 }) => {
   const { mutate, isPending } = useCreateTransactionMutation(walletId);
-  const { data: tags, isPending: isPandingTags } = useGetAllTagsQuery();
+  const { data: tags, isPending: isPendingTags } = useGetAllTagsQuery();
 
-  const form = useForm({
+  const [typesOpen, setTypesOpen] = useState<boolean>(false);
+  const [tagsOpen, setTagsOpen] = useState<boolean>(false);
+
+  const form = useForm<CreateTransactionDto>({
     resolver: zodResolver(CreateTransactionDtoSchema),
     defaultValues: {
       title: '',
-      type: TransactionType.EXPENSE,
+      type: 'EXPENSE',
       amount: '',
       walletId,
-      transactionTagId: ''
+      transactionTagId: 0
     }
   });
 
@@ -51,6 +51,16 @@ export const CreateTransactionForm = ({
         form.reset();
       }
     });
+  };
+
+  const onTypeSelect = (value: TransactionType) => {
+    form.setValue('type', value);
+    setTypesOpen(false);
+  };
+
+  const onTagSelect = (id: number) => {
+    form.setValue('transactionTagId', id);
+    setTagsOpen(false);
   };
 
   return (
@@ -81,7 +91,7 @@ export const CreateTransactionForm = ({
             render={({ field }) => (
               <FormItem className='flex flex-col'>
                 <FormLabel>Тип</FormLabel>
-                <Popover>
+                <Popover open={typesOpen} onOpenChange={setTypesOpen}>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
@@ -95,7 +105,7 @@ export const CreateTransactionForm = ({
                         {field.value ? (
                           <span className='flex flex-row items-center'>
                             {types.find((type) => type.value === field.value)?.value ===
-                            TransactionType.EXPENSE ? (
+                            'EXPENSE' ? (
                               <ChevronsDown className='size-4 mr-2 text-destructive' />
                             ) : (
                               <ChevronsUp className='size-4 mr-2 text-success' />
@@ -116,11 +126,11 @@ export const CreateTransactionForm = ({
                       <CommandGroup>
                         {types.map((type) => (
                           <CommandItem
-                            value={type.value}
+                            value={type.label}
                             key={type.value}
-                            onSelect={() => form.setValue('type', type.value)}
+                            onSelect={() => onTypeSelect(type.value)}
                           >
-                            {type.value === TransactionType.EXPENSE ? (
+                            {type.value === 'EXPENSE' ? (
                               <ChevronsDown className='size-4 mr-2 text-destructive' />
                             ) : (
                               <ChevronsUp className='size-4 mr-2 text-success' />
@@ -148,7 +158,7 @@ export const CreateTransactionForm = ({
             render={({ field }) => (
               <FormItem className='flex flex-col'>
                 <FormLabel>Тэг</FormLabel>
-                <Popover>
+                <Popover open={tagsOpen} onOpenChange={setTagsOpen}>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
@@ -159,12 +169,19 @@ export const CreateTransactionForm = ({
                           !field.value && 'text-muted-foreground'
                         )}
                       >
-                        {isPandingTags ? (
-                          <Loader variant='sm' className='mr-2' />
-                        ) : field.value && tags ? (
-                          <span className='flex flex-row'>
-                            {tags.find((tag) => tag.id === +field.value)?.title}
-                          </span>
+                        {isPendingTags && <Loader variant='sm' className='mr-2' />}
+                        {field.value && tags ? (
+                          <div className='flex flex-row gap-2 items-center'>
+                            <div
+                              className='size-4 rounded'
+                              style={{
+                                backgroundColor: tags.find((tag) => tag.id === field.value)?.color
+                              }}
+                            />
+                            <span className='flex flex-row'>
+                              {tags.find((tag) => tag.id === field.value)?.title}
+                            </span>
+                          </div>
                         ) : (
                           'Выберите тип'
                         )}
@@ -180,9 +197,9 @@ export const CreateTransactionForm = ({
                         {tags &&
                           tags.map((tag) => (
                             <CommandItem
-                              value={`${tag.id}`}
+                              value={tag.title}
                               key={tag.title}
-                              onSelect={() => form.setValue('transactionTagId', tag.id)}
+                              onSelect={() => onTagSelect(tag.id)}
                             >
                               <div
                                 className='size-4 rounded mr-2'
@@ -192,7 +209,7 @@ export const CreateTransactionForm = ({
                               <CheckIcon
                                 className={cn(
                                   'ml-auto h-4 w-4',
-                                  tag.id === +field.value ? 'opacity-100' : 'opacity-0'
+                                  tag.id === field.value ? 'opacity-100' : 'opacity-0'
                                 )}
                               />
                             </CommandItem>
@@ -218,7 +235,10 @@ export const CreateTransactionForm = ({
               </FormItem>
             )}
           />
-          <Button type='submit'>Добавить</Button>
+          <Button type='submit' disabled={isPending}>
+            {isPending && <Loader variant='sm' className='mr-2' />}
+            Добавить
+          </Button>
         </form>
       </Form>
     </DialogContent>
