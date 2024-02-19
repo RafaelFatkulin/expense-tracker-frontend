@@ -42,6 +42,8 @@ export const useCreateTransactionMutation = (walletId: number) => {
     onSuccess: async ({ message }) => {
       await queryClient.refetchQueries({ queryKey: keys.all() });
       await queryClient.refetchQueries({ queryKey: ['wallet', 'get', walletId] });
+      await queryClient.refetchQueries({ queryKey: ['wallet', 'get-last-day', walletId] });
+
       toast({
         title: 'Успешно',
         description: message

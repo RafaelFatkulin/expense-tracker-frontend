@@ -1,12 +1,20 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { queryClient } from '~shared/lib/react-query';
 import { useToast } from '~shared/ui/use-toast';
-import { createWallet, deleteWallet, getWallet, getWallets, updateWallet } from './wallet.api';
+import {
+  createWallet,
+  deleteWallet,
+  getLastDayTransactionsOfWallet,
+  getWallet,
+  getWallets,
+  updateWallet
+} from './wallet.api';
 
 const keys = {
   root: ['wallet'],
   all: () => [...keys.root, 'all'],
   getOne: (id: number) => [...keys.root, 'get', id],
+  getLastDay: (id: number) => [...keys.root, 'get-last-day', id],
   create: () => [...keys.root, 'create'],
   update: (id: number) => [...keys.root, 'update', id],
   delete: (id: number) => [...keys.root, 'delete', id]
@@ -23,6 +31,13 @@ export const useGetOneWalletQuery = (id: number) => {
   return useQuery({
     queryKey: keys.getOne(id),
     queryFn: () => getWallet(id)
+  });
+};
+
+export const useGetLastDayTransactionsOfWallet = (id: number) => {
+  return useQuery({
+    queryKey: keys.getLastDay(id),
+    queryFn: () => getLastDayTransactionsOfWallet(id)
   });
 };
 

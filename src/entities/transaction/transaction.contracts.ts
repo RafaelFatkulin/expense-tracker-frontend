@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { TagSchema } from '~entities/tag';
 
 export const TransactionSchema = z.object({
   id: z.number(),
@@ -6,7 +7,8 @@ export const TransactionSchema = z.object({
   title: z.string(),
   amount: z.number(),
   createdAt: z.date(),
-  walletId: z.number()
+  walletId: z.number(),
+  transactionTag: TagSchema
 });
 
 export const TransactionTypeSchema = z.enum(['INCOME', 'EXPENSE']);

@@ -1,19 +1,10 @@
 import { z } from 'zod';
-import { TransactionSchema } from '~entities/transaction';
 
 export const WalletSchema = z.object({
   id: z.number(),
   title: z.string(),
   balance: z.number().nullish(),
   userId: z.number()
-});
-
-export const WalletWithTransactionsSchema = z.object({
-  id: z.number(),
-  title: z.string(),
-  balance: z.number().nullish(),
-  userId: z.number(),
-  transactions: z.array(TransactionSchema)
 });
 
 export const CreateWalletDtoSchema = z.object({

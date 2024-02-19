@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { pathKeys } from '~shared/lib/react-router';
 import { Badge } from '~shared/ui/badge';
 import { Card, CardFooter, CardHeader, CardTitle } from '~shared/ui/card';
-import type { Wallet, WalletWithTransactions } from './wallet.types';
+import type { Wallet } from './wallet.types';
 
 type Props = {
   wallet: Wallet;
@@ -11,7 +11,7 @@ type Props = {
   deleteButton?: ReactNode;
 };
 
-export const badgeVariant = (wallet: Wallet | WalletWithTransactions) => {
+export const badgeVariant = (wallet: Wallet) => {
   if (wallet.balance) {
     if (wallet?.balance > 0) return 'success';
     if (wallet?.balance < 0) return 'destructive';
