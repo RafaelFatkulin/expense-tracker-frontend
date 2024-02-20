@@ -31,6 +31,9 @@ export const pathKeys = {
     },
     byId(id: number) {
       return pathKeys.wallet.root().concat(`${id}`, '/');
+    },
+    transactions(id: number) {
+      return pathKeys.wallet.byId(id).concat('transactions/');
     }
   }
 };

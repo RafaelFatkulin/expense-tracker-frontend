@@ -7,6 +7,7 @@ import { Loader } from '~shared/ui/loader';
 import { PageHeader } from '~shared/ui/page-header';
 import { CreateTransactionForm } from '~widgets/create-transaction-form';
 import { LastDayTransactions } from '~widgets/last-day-transactions';
+import { WalletStats } from '~widgets/wallet-stats';
 
 const WalletPage = () => {
   const { walletId = '' } = useParams();
@@ -38,7 +39,7 @@ const WalletPage = () => {
       />
 
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
-        <LastDayTransactions walletId={+walletId} />
+        <WalletStats walletId={+walletId} />
         <LastDayTransactions walletId={+walletId} />
       </div>
     </>

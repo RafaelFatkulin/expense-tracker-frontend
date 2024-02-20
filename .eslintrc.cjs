@@ -12,7 +12,7 @@ module.exports = {
     'plugin:prettier/recommended'
   ],
   plugins: ['prettier'],
-  ignorePatterns: ['dist', 'coverage', ".eslintrc.cjs", "vite.config.ts"],
+  ignorePatterns: ['dist', 'coverage', ".eslintrc.cjs", "vite.config.ts", "tailwind.config.js"],
   parserOptions: {
     parser: '@typescript-eslint/parser',
     ecmaFeatures: { jsx: true },

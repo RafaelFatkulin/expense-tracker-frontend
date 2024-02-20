@@ -15,3 +15,8 @@ export const CreateWalletDtoSchema = z.object({
 export const UpdateWalletDtoSchema = z.object({
   title: z.string().min(4).max(48)
 });
+
+export const SumOfWalletTransactionsByTypeResponseSchema = z.object({
+  name: z.string(),
+  value: z.number()
+});

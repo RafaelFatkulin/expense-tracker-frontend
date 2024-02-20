@@ -84,5 +84,11 @@ module.exports = {
       }
     }
   },
-  plugins: [require('tailwindcss-animate')]
+  plugins: [
+    require('tailwindcss-animate'),
+    require('tailwindcss/plugin')(({ addVariant }) => {
+      addVariant('not-last-child', '&:not(:last-child)');
+      addVariant('not-first-child', '&:not(:first-child)');
+    })
+  ]
 };

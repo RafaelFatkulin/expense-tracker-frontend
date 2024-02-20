@@ -7,6 +7,7 @@ import {
   getLastDayTransactionsOfWallet,
   getWallet,
   getWallets,
+  getWalletTransactionSum,
   updateWallet
 } from './wallet.api';
 
@@ -15,6 +16,7 @@ const keys = {
   all: () => [...keys.root, 'all'],
   getOne: (id: number) => [...keys.root, 'get', id],
   getLastDay: (id: number) => [...keys.root, 'get-last-day', id],
+  getWalletTransactionSum: (id: number) => [...keys.root, 'get-transactions-sum', id],
   create: () => [...keys.root, 'create'],
   update: (id: number) => [...keys.root, 'update', id],
   delete: (id: number) => [...keys.root, 'delete', id]
@@ -38,6 +40,13 @@ export const useGetLastDayTransactionsOfWallet = (id: number) => {
   return useQuery({
     queryKey: keys.getLastDay(id),
     queryFn: () => getLastDayTransactionsOfWallet(id)
+  });
+};
+
+export const useGetWalletTransactionSumQuery = (id: number) => {
+  return useQuery({
+    queryKey: keys.getWalletTransactionSum(id),
+    queryFn: () => getWalletTransactionSum(id)
   });
 };
 

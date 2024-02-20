@@ -1,7 +1,12 @@
 import type { Transaction } from '~entities/transaction';
 import type { SuccessMessage } from '~shared/api';
 import { api } from '~shared/api';
-import type { CreateWalletDto, UpdateWalletDto, Wallet } from './wallet.types';
+import type {
+  CreateWalletDto,
+  SumOfWalletTransactionsByTypeResponse,
+  UpdateWalletDto,
+  Wallet
+} from './wallet.types';
 
 export const getWallets = async () => {
   const response = await api.get<Wallet[]>('/wallets');
@@ -15,6 +20,13 @@ export const getWallet = async (id: number) => {
 
 export const getLastDayTransactionsOfWallet = async (id: number) => {
   const response = await api.get<Transaction[]>(`/wallets/${id}/last-transactions`);
+  return response.data;
+};
+
+export const getWalletTransactionSum = async (id: number) => {
+  const response = await api.get<SumOfWalletTransactionsByTypeResponse[]>(
+    `/wallets/${id}/transactions-sum`
+  );
   return response.data;
 };
 

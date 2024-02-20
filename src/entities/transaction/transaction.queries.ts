@@ -1,5 +1,4 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import type { TransactionType } from '~entities/transaction/transaction.types';
 import { queryClient } from '~shared/lib/react-query';
 import { useToast } from '~shared/ui/use-toast';
 import {
@@ -9,6 +8,7 @@ import {
   getWalletTransactions,
   updateTransaction
 } from './transaction.api';
+import type { TransactionType } from './transaction.types';
 
 const keys = {
   root: ['transaction'],
@@ -43,6 +43,7 @@ export const useCreateTransactionMutation = (walletId: number) => {
       await queryClient.refetchQueries({ queryKey: keys.all() });
       await queryClient.refetchQueries({ queryKey: ['wallet', 'get', walletId] });
       await queryClient.refetchQueries({ queryKey: ['wallet', 'get-last-day', walletId] });
+      await queryClient.refetchQueries({ queryKey: ['wallet', 'get-transactions-sum', walletId] });
 
       toast({
         title: 'Успешно',
