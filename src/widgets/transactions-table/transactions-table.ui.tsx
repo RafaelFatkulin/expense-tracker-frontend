@@ -203,11 +203,7 @@ export const TransactionsTable = () => {
     getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
-      columnFilters,
-      pagination: {
-        pageSize: 20,
-        pageIndex: 0
-      }
+      columnFilters
     }
   });
 
