@@ -22,7 +22,7 @@ export const badgeVariant = (wallet: Wallet) => {
 export const WalletCard = ({ wallet, updateButton, deleteButton }: Props) => {
   return (
     <Card className='flex flex-col justify-between'>
-      <CardHeader className='flex-row justify-between items-center'>
+      <CardHeader className='flex-row justify-between items-center gap-2 flex-wrap'>
         <CardTitle className='text-xl transition-colors hover:text-primary'>
           <Link to={pathKeys.wallet.byId(wallet.id)}>{wallet.title}</Link>
         </CardTitle>

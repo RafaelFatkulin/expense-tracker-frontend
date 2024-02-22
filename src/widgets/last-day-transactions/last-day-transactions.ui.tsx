@@ -1,5 +1,6 @@
-import { ChevronsDown, ChevronsUp, LayoutGrid } from 'lucide-react';
+import { LayoutGrid } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import type { TransactionType } from '~entities/transaction';
 import { useGetLastDayTransactionsOfWallet } from '~entities/wallet';
 import { pathKeys } from '~shared/lib/react-router';
 import { translateDate } from '~shared/lib/time';
@@ -15,6 +16,7 @@ import {
 } from '~shared/ui/card';
 import { Loader } from '~shared/ui/loader';
 import { Ruble } from '~shared/ui/ruble';
+import { TypeChevron } from '~shared/ui/type-chevron';
 
 export const LastDayTransactions = ({ walletId }: { walletId: number }) => {
   const { data, isPending } = useGetLastDayTransactionsOfWallet(walletId);
@@ -41,11 +43,7 @@ export const LastDayTransactions = ({ walletId }: { walletId: number }) => {
                 key={id}
                 className='flex flex-row items-start sm:items-center gap-4 not-last-child:border-b not-last-child:pb-2 not-first-child:mt-2'
               >
-                {type === 'INCOME' ? (
-                  <ChevronsUp className='size-5 text-success ' />
-                ) : (
-                  <ChevronsDown className='size-5 text-destructive ' />
-                )}{' '}
+                <TypeChevron type={type as TransactionType} />
                 <span className='flex flex-col items-start sm:items-center sm:flex-row gap-1 sm:gap-2 text-sm'>
                   {title}
 

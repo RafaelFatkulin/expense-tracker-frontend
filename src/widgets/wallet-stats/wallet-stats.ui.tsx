@@ -21,7 +21,7 @@ type Props = {
 export const WalletStats = ({ walletId }: Props) => {
   const { data, isPending } = useGetWalletTransactionSumQuery(walletId);
 
-  if (!data) {
+  if (!data || (!data[0].value && !data[1].value)) {
     return null;
   }
 
@@ -32,8 +32,8 @@ export const WalletStats = ({ walletId }: Props) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Статистика</CardTitle>
-        <CardDescription>Доходы и расходы</CardDescription>
+        <CardTitle className='text-xl'>Статистика</CardTitle>
+        <CardDescription>Доходы и расходы за последний месяц</CardDescription>
       </CardHeader>
       <CardContent className='max-h-72 h-full'>
         <ResponsivePie
@@ -83,7 +83,7 @@ export const WalletStats = ({ walletId }: Props) => {
       </CardContent>
       <CardFooter>
         <Button className='w-full md:w-fit' variant='outline' asChild>
-          <Link to={pathKeys.wallet.byId(walletId)}>
+          <Link to={pathKeys.wallet.statistics(walletId)}>
             <PieChart className='size-4 mr-2' />
             Подробнее
           </Link>

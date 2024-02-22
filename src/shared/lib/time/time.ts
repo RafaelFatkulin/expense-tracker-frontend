@@ -4,7 +4,7 @@ export const translateDate = (date: Date, time: boolean = false): string => {
     day: '2-digit',
     month: '2-digit',
     hour: time ? '2-digit' : undefined,
-    minute: time ? '2-digit' : undefined,
-    second: time ? '2-digit' : undefined
+    minute: time ? '2-digit' : undefined
+    // second: time ? '2-digit' : undefined
   });
 };

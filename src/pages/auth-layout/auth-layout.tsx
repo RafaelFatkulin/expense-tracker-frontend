@@ -23,7 +23,7 @@ export const AuthLayout = () => {
   return (
     <>
       <AuthHeader />
-      <main className='flex-1 py-6 lg:py-8'>
+      <main className='flex-1 py-6 lg:py-8 grid grid-cols-1'>
         <Outlet />
       </main>
       <Footer path={pathKeys.home()} />

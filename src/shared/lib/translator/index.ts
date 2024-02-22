@@ -1,0 +1,1 @@
+export { translateType } from './translator';

@@ -7,6 +7,7 @@ import { page404Route } from '~pages/page-404';
 import { settingsPageRoute } from '~pages/settings';
 import { signupRoute } from '~pages/signup';
 import { tagsPageRoute } from '~pages/tags';
+import { transactionsPageRoute } from '~pages/transactions';
 import { verifyMailPageRoute } from '~pages/verify-email';
 import { walletPageRoute } from '~pages/wallet';
 import { walletsPageRoute } from '~pages/wallets';
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
           walletsPageRoute,
           walletPageRoute,
           tagsPageRoute,
+          transactionsPageRoute,
           settingsPageRoute,
           page404Route
         ]

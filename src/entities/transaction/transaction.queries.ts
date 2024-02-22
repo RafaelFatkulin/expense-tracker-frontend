@@ -19,7 +19,7 @@ const keys = {
   delete: (id: number) => [...keys.root, 'delete', id]
 };
 
-export const useGetWalletTransactionsQuery = (id: number, type: TransactionType, tag: number) => {
+export const useGetWalletTransactionsQuery = (id: number, type?: TransactionType, tag?: number) => {
   return useQuery({
     queryKey: keys.all(),
     queryFn: () => getWalletTransactions(id, type, tag)

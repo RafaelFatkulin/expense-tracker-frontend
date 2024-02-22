@@ -34,6 +34,9 @@ export const pathKeys = {
     },
     transactions(id: number) {
       return pathKeys.wallet.byId(id).concat('transactions/');
+    },
+    statistics(id: number) {
+      return pathKeys.wallet.byId(id).concat('statistics/');
     }
   }
 };
