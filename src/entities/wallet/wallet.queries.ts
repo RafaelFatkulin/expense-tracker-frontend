@@ -57,7 +57,7 @@ export const useCreateWalletMutation = () => {
     mutationKey: keys.create(),
     mutationFn: createWallet,
     onSuccess: async ({ message }) => {
-      await queryClient.refetchQueries({ queryKey: keys.all() });
+      await queryClient.invalidateQueries({ queryKey: keys.all() });
       toast({
         title: 'Успешно',
         description: message
@@ -73,7 +73,10 @@ export const useUpdateWalletMutation = (id: number) => {
     mutationKey: keys.update(id),
     mutationFn: updateWallet,
     onSuccess: async ({ message }) => {
-      await queryClient.refetchQueries({ queryKey: keys.all() });
+      await queryClient.invalidateQueries({ queryKey: keys.all() });
+      await queryClient.invalidateQueries({ queryKey: keys.getWalletTransactionSum(id) });
+      await queryClient.invalidateQueries({ queryKey: keys.getLastDay(id) });
+
       toast({
         title: 'Успешно',
         description: message
@@ -89,7 +92,10 @@ export const useDeleteWalletMutation = (id: number) => {
     mutationKey: keys.delete(id),
     mutationFn: () => deleteWallet(id),
     onSuccess: async ({ message }) => {
-      await queryClient.refetchQueries({ queryKey: keys.all() });
+      await queryClient.invalidateQueries({ queryKey: keys.all() });
+      await queryClient.invalidateQueries({ queryKey: keys.getWalletTransactionSum(id) });
+      await queryClient.invalidateQueries({ queryKey: keys.getLastDay(id) });
+
       toast({
         title: 'Успешно',
         description: message

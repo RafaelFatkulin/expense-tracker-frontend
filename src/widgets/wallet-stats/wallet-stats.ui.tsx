@@ -35,7 +35,7 @@ export const WalletStats = ({ walletId }: Props) => {
         <CardTitle className='text-xl'>Статистика</CardTitle>
         <CardDescription>Доходы и расходы за последний месяц</CardDescription>
       </CardHeader>
-      <CardContent className='max-h-72 h-full'>
+      <CardContent className='max-h-80 h-full'>
         <ResponsivePie
           data={data.map((item) => ({
             id: item.name === 'expense' ? 'Расходы' : 'Доходы',
@@ -43,7 +43,7 @@ export const WalletStats = ({ walletId }: Props) => {
             value: item.value,
             color: item.name === 'expense' ? 'hsl(0 84.2% 60.2%)' : 'hsl(142.1 76.2% 36.3%)'
           }))}
-          margin={{ top: 12, right: 12, bottom: 12, left: 12 }}
+          margin={{ top: 36, right: 36, bottom: 36, left: 36 }}
           innerRadius={0.2}
           padAngle={4}
           cornerRadius={6}

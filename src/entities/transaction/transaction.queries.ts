@@ -40,10 +40,12 @@ export const useCreateTransactionMutation = (walletId: number) => {
     mutationKey: keys.create(),
     mutationFn: createTransaction,
     onSuccess: async ({ message }) => {
-      await queryClient.refetchQueries({ queryKey: keys.all() });
-      await queryClient.refetchQueries({ queryKey: ['wallet', 'get', walletId] });
-      await queryClient.refetchQueries({ queryKey: ['wallet', 'get-last-day', walletId] });
-      await queryClient.refetchQueries({ queryKey: ['wallet', 'get-transactions-sum', walletId] });
+      await queryClient.invalidateQueries({ queryKey: keys.all() });
+      await queryClient.invalidateQueries({ queryKey: ['wallet', 'get', walletId] });
+      await queryClient.invalidateQueries({ queryKey: ['wallet', 'get-last-day', walletId] });
+      await queryClient.invalidateQueries({
+        queryKey: ['wallet', 'get-transactions-sum', walletId]
+      });
 
       toast({
         title: 'Успешно',
@@ -53,14 +55,20 @@ export const useCreateTransactionMutation = (walletId: number) => {
   });
 };
 
-export const useUpdateTransactionMutation = (id: number) => {
+export const useUpdateTransactionMutation = (id: number, walletId: number) => {
   const { toast } = useToast();
 
   return useMutation({
     mutationKey: keys.update(id),
     mutationFn: updateTransaction,
     onSuccess: async ({ message }) => {
-      await queryClient.refetchQueries({ queryKey: keys.all() });
+      await queryClient.invalidateQueries({ queryKey: keys.all() });
+      await queryClient.invalidateQueries({ queryKey: ['wallet', 'all'] });
+      await queryClient.invalidateQueries({ queryKey: ['wallet', 'get', walletId] });
+      await queryClient.invalidateQueries({ queryKey: ['wallet', 'get-last-day', walletId] });
+      await queryClient.invalidateQueries({
+        queryKey: ['wallet', 'get-transactions-sum', walletId]
+      });
       toast({
         title: 'Успешно',
         description: message
@@ -69,14 +77,20 @@ export const useUpdateTransactionMutation = (id: number) => {
   });
 };
 
-export const useDeleteTransactionMutation = (id: number) => {
+export const useDeleteTransactionMutation = (id: number, walletId: number) => {
   const { toast } = useToast();
 
   return useMutation({
     mutationKey: keys.delete(id),
     mutationFn: deleteTransaction,
     onSuccess: async ({ message }) => {
-      await queryClient.refetchQueries({ queryKey: keys.all() });
+      await queryClient.invalidateQueries({ queryKey: keys.all() });
+      await queryClient.invalidateQueries({ queryKey: ['wallet', 'all'] });
+      await queryClient.invalidateQueries({ queryKey: ['wallet', 'get', walletId] });
+      await queryClient.invalidateQueries({ queryKey: ['wallet', 'get-last-day', walletId] });
+      await queryClient.invalidateQueries({
+        queryKey: ['wallet', 'get-transactions-sum', walletId]
+      });
       toast({
         title: 'Успешно',
         description: message

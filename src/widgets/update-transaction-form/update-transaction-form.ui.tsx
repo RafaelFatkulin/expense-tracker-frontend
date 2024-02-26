@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
 import { ChevronsDown, ChevronsUp, Pencil } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 import { useGetAllTagsQuery } from '~entities/tag';
 import {
   transactionTypes,
@@ -25,9 +26,10 @@ type Props = {
 };
 
 export const UpdateTransactionForm = ({ transaction }: Props) => {
+  const { walletId } = useParams();
   const { setIsOpen } = useUpdateTransactionContext();
   const { data: tags, isPending: isPendingTags } = useGetAllTagsQuery();
-  const { mutate, isPending } = useUpdateTransactionMutation(transaction.id);
+  const { mutate, isPending } = useUpdateTransactionMutation(transaction.id, +walletId!);
 
   const [typesOpen, setTypesOpen] = useState<boolean>(false);
   const [tagsOpen, setTagsOpen] = useState<boolean>(false);

@@ -1,6 +1,7 @@
 import type { HTMLAttributes } from 'react';
 import { useState, forwardRef } from 'react';
 import { Trash2 } from 'lucide-react';
+import { useParams } from 'react-router-dom';
 import type { Transaction } from '~entities/transaction';
 import { useDeleteTransactionMutation } from '~entities/transaction';
 import { Button } from '~shared/ui/button';
@@ -21,7 +22,8 @@ type Props = {
 
 export const DeleteTransactionButton = forwardRef<HTMLButtonElement, Props>(
   ({ transaction }: Props, ref) => {
-    const { mutate, isPending } = useDeleteTransactionMutation(transaction.id);
+    const { walletId } = useParams();
+    const { mutate, isPending } = useDeleteTransactionMutation(transaction.id, +walletId!);
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const handleClick = () =>
