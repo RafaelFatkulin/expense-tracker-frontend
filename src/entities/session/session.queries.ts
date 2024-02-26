@@ -10,7 +10,6 @@ import { pathKeys } from '~shared/lib/react-router';
 import { useToast } from '~shared/ui/use-toast';
 import { getCurrentUser, login, signup, updateUser, verifyEmail } from './session.api';
 import { sessionStore } from './session.model';
-import type { UpdateUserDto } from './session.types';
 
 const keys = {
   root: ['session'],
@@ -22,6 +21,8 @@ const keys = {
   verify: () => [...keys.root, 'verify'] as const
 };
 
+console.log(keys.currentUser());
+
 export const useCurrentUserQuery = () => {
   return useQuery({
     queryKey: keys.currentUser(),
@@ -30,7 +31,7 @@ export const useCurrentUserQuery = () => {
   });
 };
 
-export const useVefiryEmailQuery = () => {
+export const useVerifyEmailQuery = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token')!;
 
@@ -85,16 +86,24 @@ export const useSignupMutation = () => {
   });
 };
 
-export const useUpdateUserMutation = ({ userId, username }: UpdateUserDto) => {
+export const useUpdateUserMutation = () => {
   const { toast } = useToast();
 
   return useMutation({
     mutationKey: keys.updateUser(),
-    mutationFn: () => updateUser({ userId, username }),
-    onSuccess: ({ message }) => {
+    mutationFn: updateUser,
+    onSuccess: async ({ message }) => {
       toast({
         title: 'Успешно',
         description: message
+      });
+      await queryClient.invalidateQueries({ queryKey: keys.currentUser() });
+    },
+    onError: (error: ErrorMessage) => {
+      toast({
+        title: 'Ошибка',
+        description: error?.response?.data?.message,
+        variant: 'destructive'
       });
     }
   });

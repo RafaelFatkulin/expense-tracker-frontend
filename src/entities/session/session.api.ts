@@ -4,7 +4,7 @@ import type { LoginDto, SignupDto, Token, UpdateUserDto, User } from './session.
 
 export const getCurrentUser = async () => {
   const response = await api.get<User>('/auth');
-  localStorage.setItem('user', JSON.stringify(response.data));
+  // localStorage.setItem('user', JSON.stringify(response.data));
   return response.data;
 };
 
@@ -34,10 +34,8 @@ export const signup = async ({ username, email, password }: SignupDto) => {
   return response.data;
 };
 
-export const updateUser = async ({ userId, username }: UpdateUserDto) => {
-  const response = await api.patch<SuccessMessage>(`/users/${userId}`, {
-    username
-  });
+export const updateUser = async (params: { userId: number; updateUserDto: UpdateUserDto }) => {
+  const response = await api.patch<SuccessMessage>(`/users/${params.userId}`, params.updateUserDto);
 
   return response.data;
 };

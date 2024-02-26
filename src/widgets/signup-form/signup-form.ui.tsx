@@ -13,7 +13,7 @@ import { Text } from '~shared/ui/text';
 
 export const SignupForm = () => {
   const { mutate, isPending } = useSignupMutation();
-  const form = useForm({
+  const form = useForm<SignupDto>({
     resolver: zodResolver(SignupDtoSchema),
     defaultValues: {
       username: '',

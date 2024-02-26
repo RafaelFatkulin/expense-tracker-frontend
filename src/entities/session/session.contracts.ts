@@ -9,7 +9,6 @@ export const UserSchema = z.object({
 });
 
 export const UpdateUserDtoSchema = z.object({
-  userId: z.number(),
   username: z.string().min(8).max(72)
 });
 

@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useVefiryEmailQuery } from '~entities/session';
+import { useVerifyEmailQuery } from '~entities/session';
 import { pathKeys } from '~shared/lib/react-router';
 import { Container } from '~shared/ui/container';
 import { Loader } from '~shared/ui/loader';
 import { useToast } from '~shared/ui/use-toast';
 
 const VerifyMailPage = () => {
-  const { data, isLoading } = useVefiryEmailQuery();
+  const { data, isLoading } = useVerifyEmailQuery();
   const { toast } = useToast();
   const navigate = useNavigate();
 
