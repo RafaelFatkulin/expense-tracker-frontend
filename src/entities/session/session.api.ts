@@ -4,7 +4,7 @@ import type { LoginDto, SignupDto, Token, UpdateUserDto, User } from './session.
 
 export const getCurrentUser = async () => {
   const response = await api.get<User>('/auth');
-  // localStorage.setItem('user', JSON.stringify(response.data));
+
   return response.data;
 };
 

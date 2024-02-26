@@ -21,8 +21,6 @@ const keys = {
   verify: () => [...keys.root, 'verify'] as const
 };
 
-console.log(keys.currentUser());
-
 export const useCurrentUserQuery = () => {
   return useQuery({
     queryKey: keys.currentUser(),

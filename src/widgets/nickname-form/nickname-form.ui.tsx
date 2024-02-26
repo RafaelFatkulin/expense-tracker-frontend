@@ -30,7 +30,8 @@ export const NicknameForm = () => {
     resolver: zodResolver(UpdateUserDtoSchema),
     defaultValues: {
       username: user?.username
-    }
+    },
+    mode: 'all'
   });
 
   useEffect(() => {
@@ -63,7 +64,13 @@ export const NicknameForm = () => {
         <CardDescription>Редактировать никнейм</CardDescription>
         <CardContent className='p-0 pt-4'>
           <Form {...form}>
-            <form className='grid gap-3'>
+            <form
+              className='grid gap-3'
+              onSubmit={(e) => {
+                e.preventDefault();
+                setIsOpen(true);
+              }}
+            >
               <FormField
                 control={form.control}
                 name='username'
@@ -79,7 +86,13 @@ export const NicknameForm = () => {
 
               <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogTrigger asChild>
-                  <Button type='button' disabled={form.getValues('username') === user?.username}>
+                  <Button
+                    type='button'
+                    disabled={
+                      form.getValues('username') === user?.username ||
+                      !!form.formState.errors.username
+                    }
+                  >
                     <Save className='size-4 mr-2' />
                     Изменить
                   </Button>
@@ -95,8 +108,8 @@ export const NicknameForm = () => {
                   <DialogFooter className='grid grid-cols-2'>
                     <Button
                       type='button'
-                      onClick={form.handleSubmit(onSubmit)}
                       disabled={isPending}
+                      onClick={form.handleSubmit(onSubmit)}
                     >
                       {isPending && <Loader variant='sm' className='mr-2' />}
                       <Check className='size-4 mr-2' />
