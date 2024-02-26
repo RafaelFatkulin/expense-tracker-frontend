@@ -13,6 +13,11 @@ import { useParams } from 'react-router-dom';
 import type { Tag } from '~entities/tag';
 import type { Transaction, TransactionType } from '~entities/transaction';
 import { useGetWalletTransactionsQuery } from '~entities/transaction';
+import {
+  DeleteTransactionButton,
+  UpdateTransactionButton,
+  UpdateTransactionProvider
+} from '~features/transaction';
 import { translateType } from '~shared/lib/translator';
 import { Badge } from '~shared/ui/badge';
 import { Button } from '~shared/ui/button';
@@ -21,8 +26,9 @@ import { Loader } from '~shared/ui/loader';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '~shared/ui/table';
 import { TablePagination } from '~shared/ui/table-pagination';
 import { TypeChevron } from '~shared/ui/type-chevron';
+import { UpdateTransactionForm } from '~widgets/update-transaction-form';
 
-const columns: ColumnDef<Transaction, unknown>[] = [
+const columns: ColumnDef<Transaction, Transaction>[] = [
   {
     accessorKey: 'title',
     header: ({ column }) => {
@@ -182,6 +188,22 @@ const columns: ColumnDef<Transaction, unknown>[] = [
         currency: 'RUB'
       }).format(amount);
     }
+  },
+  {
+    accessorKey: 'actions',
+    header: () => 'Действия',
+    cell: ({ row }) => {
+      return (
+        <div className='flex flex-row items-center gap-2'>
+          <UpdateTransactionProvider>
+            <UpdateTransactionButton>
+              <UpdateTransactionForm transaction={row.original} />
+            </UpdateTransactionButton>
+          </UpdateTransactionProvider>
+          <DeleteTransactionButton transaction={row.original} />
+        </div>
+      );
+    }
   }
 ];
 
@@ -221,9 +243,9 @@ export const TransactionsTable = () => {
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
+                      {header.isPlaceholder ? null : (
+                        <>{flexRender(header.column.columnDef.header, header.getContext())}</>
+                      )}
                     </TableHead>
                   );
                 })}

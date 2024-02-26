@@ -50,7 +50,7 @@ export const updateTransaction = async (params: {
   return response.data;
 };
 
-export const deleteTransaction = async (id: number) => {
-  const response = await api.delete<SuccessMessage>(`/transactions/${id}`);
+export const deleteTransaction = async (params: { id: number }) => {
+  const response = await api.delete<SuccessMessage>(`/transactions/${params.id}`);
   return response.data;
 };

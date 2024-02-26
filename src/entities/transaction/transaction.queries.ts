@@ -74,7 +74,7 @@ export const useDeleteTransactionMutation = (id: number) => {
 
   return useMutation({
     mutationKey: keys.delete(id),
-    mutationFn: () => deleteTransaction(id),
+    mutationFn: deleteTransaction,
     onSuccess: async ({ message }) => {
       await queryClient.refetchQueries({ queryKey: keys.all() });
       toast({

@@ -1,15 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
-import { ChevronsDown, ChevronsUp } from 'lucide-react';
+import { ChevronsDown, ChevronsUp, Pencil } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useGetAllTagsQuery } from '~entities/tag';
-import type { CreateTransactionDto, TransactionType } from '~entities/transaction';
 import {
   transactionTypes,
-  CreateTransactionDtoSchema,
-  useCreateTransactionMutation
+  UpdateTransactionDtoSchema,
+  useUpdateTransactionMutation
 } from '~entities/transaction';
+import type { Transaction, UpdateTransactionDto, TransactionType } from '~entities/transaction';
+import { useUpdateTransactionContext } from '~features/transaction';
 import { cn } from '~shared/lib/cn';
 import { Button } from '~shared/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '~shared/ui/command';
@@ -19,39 +20,27 @@ import { Input } from '~shared/ui/input';
 import { Loader } from '~shared/ui/loader';
 import { Popover, PopoverContent, PopoverTrigger } from '~shared/ui/popover';
 
-export const CreateTransactionForm = ({
-  walletId,
-  closeDialog
-}: {
-  walletId: number;
-  closeDialog: () => void;
-}) => {
-  const { mutate, isPending } = useCreateTransactionMutation(walletId);
+type Props = {
+  transaction: Transaction;
+};
+
+export const UpdateTransactionForm = ({ transaction }: Props) => {
+  const { setIsOpen } = useUpdateTransactionContext();
   const { data: tags, isPending: isPendingTags } = useGetAllTagsQuery();
+  const { mutate, isPending } = useUpdateTransactionMutation(transaction.id);
 
   const [typesOpen, setTypesOpen] = useState<boolean>(false);
   const [tagsOpen, setTagsOpen] = useState<boolean>(false);
 
-  const form = useForm<CreateTransactionDto>({
-    resolver: zodResolver(CreateTransactionDtoSchema),
+  const form = useForm<UpdateTransactionDto>({
+    resolver: zodResolver(UpdateTransactionDtoSchema),
     defaultValues: {
-      title: '',
-      type: 'EXPENSE',
-      amount: '',
-      walletId,
-      transactionTagId: 0
+      title: transaction.title || '',
+      type: transaction.type || '',
+      amount: transaction.amount || '',
+      transactionTagId: transaction.transactionTag.id || 0
     }
   });
-
-  const onSubmit = (values: CreateTransactionDto) => {
-    mutate(values, {
-      onSuccess: () => {
-        closeDialog();
-        form.reset();
-      }
-    });
-  };
-
   const onTypeSelect = (value: TransactionType) => {
     form.setValue('type', value);
     setTypesOpen(false);
@@ -62,13 +51,35 @@ export const CreateTransactionForm = ({
     setTagsOpen(false);
   };
 
+  const onSubmit = (values: UpdateTransactionDto) =>
+    mutate(
+      {
+        id: transaction.id,
+        updateTransactionDto: values
+      },
+      {
+        onSuccess: () => {
+          setIsOpen(false);
+          form.reset();
+        }
+      }
+    );
+
+  useEffect(() => {
+    form.reset({
+      title: transaction.title || '',
+      type: transaction.type || '',
+      amount: transaction.amount || '',
+      transactionTagId: transaction.transactionTag.id || 0
+    });
+  }, [form, transaction]);
+
   return (
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Добавление транзакции</DialogTitle>
-        <DialogDescription>Введите данные транзакции.</DialogDescription>
+        <DialogTitle>Редактирование транзакции</DialogTitle>
+        <DialogDescription>Введите новую информацию для транзакции.</DialogDescription>
       </DialogHeader>
-
       <Form {...form}>
         <form className='grid gap-3' onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
@@ -235,8 +246,12 @@ export const CreateTransactionForm = ({
             )}
           />
           <Button type='submit' disabled={isPending}>
-            {isPending && <Loader variant='sm' className='mr-2' />}
-            Добавить
+            {isPending ? (
+              <Loader variant='sm' className='mr-2' />
+            ) : (
+              <Pencil className='size-4 mr-2' />
+            )}
+            Редактировать
           </Button>
         </form>
       </Form>

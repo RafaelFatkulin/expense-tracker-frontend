@@ -3,9 +3,9 @@ import { TagSchema } from '~entities/tag';
 
 export const TransactionSchema = z.object({
   id: z.number(),
-  type: z.string(),
+  type: z.enum(['EXPENSE', 'INCOME']),
   title: z.string(),
-  amount: z.number(),
+  amount: z.string(),
   createdAt: z.date(),
   walletId: z.number(),
   transactionTag: TagSchema
@@ -23,7 +23,7 @@ export const CreateTransactionDtoSchema = z.object({
 
 export const UpdateTransactionDtoSchema = z.object({
   title: z.string().min(4).max(255),
-  type: TransactionSchema,
-  amount: z.number(),
+  type: TransactionTypeSchema,
+  amount: z.string(),
   transactionTagId: z.number()
 });

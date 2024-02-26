@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import type { TransactionType } from '~entities/transaction';
 import { useGetLastDayTransactionsOfWallet } from '~entities/wallet';
 import { pathKeys } from '~shared/lib/react-router';
-import { translateDate } from '~shared/lib/time';
 import { Badge } from '~shared/ui/badge';
 import { Button } from '~shared/ui/button';
 import {
@@ -33,7 +32,7 @@ export const LastDayTransactions = ({ walletId }: { walletId: number }) => {
     <Card className='flex flex-col'>
       <CardHeader>
         <CardTitle className='text-xl'>История</CardTitle>
-        <CardDescription>Транзакции за {data && translateDate(data[0]?.createdAt)}</CardDescription>
+        <CardDescription>Последние транзакции</CardDescription>
       </CardHeader>
       <CardContent className='flex-1'>
         <ul className='flex flex-col gap-1'>

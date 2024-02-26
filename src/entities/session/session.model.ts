@@ -2,7 +2,7 @@ import type { StateCreator } from 'zustand';
 import { createStore } from 'zustand';
 import type { DevtoolsOptions, PersistOptions } from 'zustand/middleware';
 import { devtools, persist } from 'zustand/middleware';
-import type { User } from '~entities/session/session.types';
+import type { User } from './session.types';
 
 type Token = string;
 
