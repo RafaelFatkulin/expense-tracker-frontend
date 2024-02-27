@@ -2,8 +2,12 @@ import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Check, Save, X } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import type { UpdateUserDto } from '~entities/session';
-import { UpdateUserDtoSchema, useCurrentUserQuery, useUpdateUserMutation } from '~entities/session';
+import {
+  ChangeEmailDtoSchema,
+  useChangeEmailMutation,
+  useCurrentUserQuery
+} from '~entities/session';
+import type { ChangeEmailDto } from '~entities/session';
 import { Button } from '~shared/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~shared/ui/card';
 import {
@@ -20,48 +24,42 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '~shared/ui/
 import { Input } from '~shared/ui/input';
 import { Loader } from '~shared/ui/loader';
 
-export const NicknameForm = () => {
+export const ChangeEmailForm = () => {
   const { data: user } = useCurrentUserQuery();
-  const { mutate, isPending } = useUpdateUserMutation();
+  const { mutate, isPending } = useChangeEmailMutation();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const form = useForm<UpdateUserDto>({
-    resolver: zodResolver(UpdateUserDtoSchema),
+  const form = useForm<ChangeEmailDto>({
+    resolver: zodResolver(ChangeEmailDtoSchema),
     defaultValues: {
-      username: user?.username
+      newEmail: user?.email
     },
     mode: 'all'
   });
 
   useEffect(() => {
     form.reset({
-      username: user?.username
+      newEmail: user?.email
     });
   }, [form, user]);
 
-  const onSubmit = (values: UpdateUserDto) => {
+  const onSubmit = (values: ChangeEmailDto) => {
     if (user) {
-      mutate(
-        {
-          userId: +user.id,
-          updateUserDto: values
-        },
-        {
-          onSuccess: () => {
-            form.reset();
-            setIsOpen(false);
-          }
+      mutate(values, {
+        onSuccess: () => {
+          form.reset();
+          setIsOpen(false);
         }
-      );
+      });
     }
   };
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className='text-xl'>Никнейм</CardTitle>
-        <CardDescription>Редактировать никнейм</CardDescription>
+        <CardTitle className='text-xl'>Email</CardTitle>
+        <CardDescription>Изменить Email</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -74,11 +72,11 @@ export const NicknameForm = () => {
           >
             <FormField
               control={form.control}
-              name='username'
+              name='newEmail'
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder='Никнейм' {...field} />
+                    <Input placeholder='Email' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -91,8 +89,7 @@ export const NicknameForm = () => {
                   className='w-full lg:w-fit'
                   type='button'
                   disabled={
-                    form.getValues('username') === user?.username ||
-                    !!form.formState.errors.username
+                    form.getValues('newEmail') === user?.email || !!form.formState.errors.newEmail
                   }
                 >
                   <Save className='size-4 mr-2' />
@@ -103,14 +100,17 @@ export const NicknameForm = () => {
                 <DialogHeader>
                   <DialogTitle>Внимание</DialogTitle>
                   <DialogDescription>
-                    Вы действительно хотите поменять никнейм на &quot;
-                    {form.getValues('username')}&quot;?
+                    Вы действительно хотите поменять Email на &quot;{form.getValues('newEmail')}
+                    &quot;?
                   </DialogDescription>
                 </DialogHeader>
                 <DialogFooter className='grid grid-cols-2'>
                   <Button type='button' disabled={isPending} onClick={form.handleSubmit(onSubmit)}>
-                    {isPending && <Loader variant='sm' className='mr-2' />}
-                    <Check className='size-4 mr-2' />
+                    {isPending ? (
+                      <Loader variant='sm' className='mr-2' />
+                    ) : (
+                      <Check className='size-4 mr-2' />
+                    )}
                     Да
                   </Button>
                   <DialogClose asChild>

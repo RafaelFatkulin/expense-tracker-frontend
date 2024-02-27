@@ -25,6 +25,9 @@ export const pathKeys = {
   verifyMail() {
     return pathKeys.root.concat('email-verify/');
   },
+  changeEmail() {
+    return pathKeys.root.concat('change-email/');
+  },
   wallet: {
     root() {
       return pathKeys.root.concat('wallets/');

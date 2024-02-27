@@ -38,3 +38,5 @@ export const LoginDtoSchema = z.object({
 export const TokenResponseSchema = z.object({
   token: z.string()
 });
+
+export const ChangeEmailDtoSchema = z.object({ newEmail: z.string().email() });

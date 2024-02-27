@@ -1,6 +1,13 @@
 import type { SuccessMessage } from '~shared/api';
 import { api } from '~shared/api';
-import type { LoginDto, SignupDto, Token, UpdateUserDto, User } from './session.types';
+import type {
+  ChangeEmailDto,
+  LoginDto,
+  SignupDto,
+  Token,
+  UpdateUserDto,
+  User
+} from './session.types';
 
 export const getCurrentUser = async () => {
   const response = await api.get<User>('/auth');
@@ -9,7 +16,7 @@ export const getCurrentUser = async () => {
 };
 
 export const verifyEmail = async ({ token }: { token: string }) => {
-  const response = await api.get<SuccessMessage>(`/auth/verify?token=${token}`);
+  const response = await api.get<SuccessMessage>(`/auth/change-email?token=${token}`);
 
   return response.data;
 };
@@ -36,6 +43,18 @@ export const signup = async ({ username, email, password }: SignupDto) => {
 
 export const updateUser = async (params: { userId: number; updateUserDto: UpdateUserDto }) => {
   const response = await api.patch<SuccessMessage>(`/users/${params.userId}`, params.updateUserDto);
+
+  return response.data;
+};
+
+export const changeEmail = async (changeEmailDto: ChangeEmailDto) => {
+  const response = await api.post<SuccessMessage>('/auth/change-email', changeEmailDto);
+
+  return response.data;
+};
+
+export const verifyChangeEmail = async (token: Token) => {
+  const response = await api.get<SuccessMessage>(`/auth/change-email?token=${token.token}`);
 
   return response.data;
 };

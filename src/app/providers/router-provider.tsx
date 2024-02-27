@@ -1,5 +1,6 @@
 import { createBrowserRouter, redirect, RouterProvider, useRouteError } from 'react-router-dom';
 import { AuthLayout } from '~pages/auth-layout';
+import { changeMailPageRoute } from '~pages/change-email';
 import { homePageRoute } from '~pages/home';
 import { loginRoute } from '~pages/login';
 import { MainLayout } from '~pages/main-layout';
@@ -33,7 +34,8 @@ const router = createBrowserRouter([
           tagsPageRoute,
           transactionsPageRoute,
           settingsPageRoute,
-          page404Route
+          page404Route,
+          changeMailPageRoute
         ]
       },
       {
