@@ -7,6 +7,7 @@ import { MainLayout } from '~pages/main-layout';
 import { page404Route } from '~pages/page-404';
 import { settingsPageRoute } from '~pages/settings';
 import { signupRoute } from '~pages/signup';
+import { statisticsPageRoute } from '~pages/statistics';
 import { tagsPageRoute } from '~pages/tags';
 import { transactionsPageRoute } from '~pages/transactions';
 import { verifyMailPageRoute } from '~pages/verify-email';
@@ -35,7 +36,8 @@ const router = createBrowserRouter([
           transactionsPageRoute,
           settingsPageRoute,
           page404Route,
-          changeMailPageRoute
+          changeMailPageRoute,
+          statisticsPageRoute
         ]
       },
       {
