@@ -7,6 +7,11 @@ export const WalletSchema = z.object({
   userId: z.number()
 });
 
+export const CalendarDataSchema = z.object({
+  day: z.string(),
+  value: z.number()
+});
+
 export const CreateWalletDtoSchema = z.object({
   title: z.string().min(4).max(48),
   userId: z.number()
@@ -19,4 +24,10 @@ export const UpdateWalletDtoSchema = z.object({
 export const SumOfWalletTransactionsByTypeResponseSchema = z.object({
   name: z.string(),
   value: z.number()
+});
+
+export const TagInfoSchema = z.object({
+  tag: z.string(),
+  amount: z.number(),
+  amountColor: z.string()
 });

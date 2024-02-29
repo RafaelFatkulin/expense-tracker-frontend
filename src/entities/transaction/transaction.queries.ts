@@ -46,6 +46,12 @@ export const useCreateTransactionMutation = (walletId: number) => {
       await queryClient.invalidateQueries({
         queryKey: ['wallet', 'get-transactions-sum', walletId]
       });
+      await queryClient.invalidateQueries({
+        queryKey: ['wallet', 'calendar', walletId]
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ['wallet', 'tags', walletId]
+      });
 
       toast({
         title: 'Успешно',
@@ -69,6 +75,13 @@ export const useUpdateTransactionMutation = (id: number, walletId: number) => {
       await queryClient.invalidateQueries({
         queryKey: ['wallet', 'get-transactions-sum', walletId]
       });
+      await queryClient.invalidateQueries({
+        queryKey: ['wallet', 'calendar', walletId]
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ['wallet', 'tags', walletId]
+      });
+
       toast({
         title: 'Успешно',
         description: message
@@ -91,6 +104,13 @@ export const useDeleteTransactionMutation = (id: number, walletId: number) => {
       await queryClient.invalidateQueries({
         queryKey: ['wallet', 'get-transactions-sum', walletId]
       });
+      await queryClient.invalidateQueries({
+        queryKey: ['wallet', 'calendar', walletId]
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ['wallet', 'tags', walletId]
+      });
+
       toast({
         title: 'Успешно',
         description: message

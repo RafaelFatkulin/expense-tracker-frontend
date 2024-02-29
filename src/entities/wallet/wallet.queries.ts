@@ -5,7 +5,9 @@ import {
   createWallet,
   deleteWallet,
   getLastDayTransactionsOfWallet,
+  getTagsData,
   getWallet,
+  getWalletCalendarData,
   getWallets,
   getWalletTransactionSum,
   updateWallet
@@ -17,6 +19,8 @@ const keys = {
   getOne: (id: number) => [...keys.root, 'get', id],
   getLastDay: (id: number) => [...keys.root, 'get-last-day', id],
   getWalletTransactionSum: (id: number) => [...keys.root, 'get-transactions-sum', id],
+  getCalendar: (id: number) => [...keys.root, 'calendar', id],
+  getTags: (id: number) => [...keys.root, 'tags', id],
   create: () => [...keys.root, 'create'],
   update: (id: number) => [...keys.root, 'update', id],
   delete: (id: number) => [...keys.root, 'delete', id]
@@ -47,6 +51,20 @@ export const useGetWalletTransactionSumQuery = (id: number) => {
   return useQuery({
     queryKey: keys.getWalletTransactionSum(id),
     queryFn: () => getWalletTransactionSum(id)
+  });
+};
+
+export const useGetCalendarQuery = (id: number, startDate?: string, endDate?: string) => {
+  return useQuery({
+    queryKey: keys.getCalendar(id),
+    queryFn: () => getWalletCalendarData(id, startDate, endDate)
+  });
+};
+
+export const useGetTagsDataQuery = (id: number) => {
+  return useQuery({
+    queryKey: keys.getTags(id),
+    queryFn: () => getTagsData(id)
   });
 };
 

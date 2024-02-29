@@ -2,8 +2,10 @@ import type { Transaction } from '~entities/transaction';
 import type { SuccessMessage } from '~shared/api';
 import { api } from '~shared/api';
 import type {
+  CalendarData,
   CreateWalletDto,
   SumOfWalletTransactionsByTypeResponse,
+  TagInfo,
   UpdateWalletDto,
   Wallet
 } from './wallet.types';
@@ -42,5 +44,29 @@ export const updateWallet = async (params: { id: number; updateWalletDto: Update
 
 export const deleteWallet = async (id: number) => {
   const response = await api.delete<SuccessMessage>(`/wallets/${id}`);
+  return response.data;
+};
+
+export const getWalletCalendarData = async (id: number, startDate?: string, endDate?: string) => {
+  const params = new URLSearchParams();
+
+  if (startDate !== undefined) {
+    params.append('startDate', startDate.toString());
+  }
+
+  if (endDate !== undefined) {
+    params.append('endDate', endDate.toString());
+  }
+
+  const url = `/wallets/${id}/calendar?${params.toString()}`;
+
+  const response = await api.get<CalendarData[]>(url);
+
+  return response.data;
+};
+
+export const getTagsData = async (id: number) => {
+  const response = await api.get<TagInfo[]>(`/wallets/${id}/tags`);
+
   return response.data;
 };
